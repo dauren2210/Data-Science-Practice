@@ -1,0 +1,288 @@
+---
+title: "Aufgabe m4. Teilaufgabe c für Statistik-Praktikum"
+output: html_notebook
+---
+
+Dauren Tursynbek
+\n
+
+108019256321
+\n
+
+Aufgabe m4. a)
+
+```{r}
+#Procedure a) for s0=0.1
+rejected = 0
+for(i in 1:100000){
+  b1 = rbinom(1, 50, 0.7)
+  b2 = rbinom(1, 50, 0.6)
+  
+  ph1 <- (b1/50)
+  pt1 <- ph1
+  
+  ph2 <- (b2/40)
+  pt2 <- ph2
+  
+  s0 = 0.1
+  
+  T = (ph1-ph2-s0)/(ph1*(1-ph1)/50+ph2*(1-ph2)/40)^(1/2)
+  
+  if(T<0.05){
+    rejected = rejected +1
+  }
+}
+print(paste0("Fraction of rejections: ", rejected/100000))
+
+
+#Pearson-Clopper Confidence Interval
+n = 100000
+k = n - rejected
+
+f1 = 2*(n - k + 1)
+f2 = 2*k
+
+Fb <- function(f1, f2){
+  qf(.975, f1, f2)
+}
+Fa <- function(f1, f2){
+  qf(.025, f1, f2)
+}
+
+pu=k/(k + (n - k + 1)*Fb(f1, f2))
+po=(k + 1)/(k + 1 + (n - k)*Fa(f1 - 2, f2 - 2))
+print(paste0("[", round(pu, 5), ", ", round(po, 5), "]"))
+
+nominal = 0.05
+if(nominal >= pu & nominal <= po){
+  print("0.05 is contained in the confidence intreval")
+} else{
+  print("0.05 is NOT contained in the confidence intreval")
+}
+```
+```{r}
+# The same procedure for Alternative Hypothesis s0=0.05
+
+rejected = 0
+for(i in 1:100000){
+  b1 = rbinom(1, 50, 0.7)
+  b2 = rbinom(1, 50, 0.6)
+  
+  ph1 <- (b1/50)
+  pt1 <- ph1
+  
+  ph2 <- (b2/40)
+  pt2 <- ph2
+  
+  s0 = 0.05
+  
+  T = (ph1-ph2-s0)/(ph1*(1-ph1)/50+ph2*(1-ph2)/40)^(1/2)
+  
+  if(T<0.05){
+    rejected = rejected +1
+  }
+}
+print(paste0("Fraction of rejections: ", rejected/100000))
+
+
+#Pearson-Clopper Confidence Interval
+n = 100000
+k = n - rejected
+
+f1 = 2*(n - k + 1)
+f2 = 2*k
+
+Fb <- function(f1, f2){
+  qf(.975, f1, f2)
+}
+Fa <- function(f1, f2){
+  qf(.025, f1, f2)
+}
+
+pu=k/(k + (n - k + 1)*Fb(f1, f2))
+po=(k + 1)/(k + 1 + (n - k)*Fa(f1 - 2, f2 - 2))
+print(paste0("[", round(pu, 5), ", ", round(po, 5), "]"))
+
+nominal = 0.05
+if(nominal >= pu & nominal <= po){
+  print("0.05 is contained in the confidence intreval")
+} else{
+  print("0.05 is NOT contained in the confidence intreval")
+}
+```
+
+
+
+
+
+
+
+Aufgabe m4. c)
+
+```{r}
+#Procedure as in a) for s0=0.1
+
+count = 0 #count is the number of real-value (non-NaN) samples
+rejected = 0 #rejected is the number of rejected samples
+
+while(count <100000){
+  b1 = rbinom(1, 50, 0.7)
+  b2 = rbinom(1, 40, 0.6)
+  
+  s0 = 0.1
+  r <- -(b1+b2+50*(1+s0)+40*(1+s0))/(50+40)
+  z <- (b2+b1*(1+2*s0)+s0*(50+40*(1+s0)))/(50+40)
+  t <- (-b1*s0*(1+s0))/(50+40)
+  
+  ph1 <- (b1/50)
+  c <- -(2*r^3/27-r*z/3+t)/(2*((r^2-3*z)^(1/2)/3)^3)
+  
+  #This line skips iterations with NaN values for arccos(). The loop stops only when 100000 real-value samples are received.
+  if(c > 1 | c < -1){
+    next
+  }
+  pt1 <- (2*(r^2-3*z)^(1/2)/3*
+            cos(1/3*acos(-(2*r^3/27-r*z/3+t)/(2*((r^2-3*z)^(1/2)/3)^3))+4/3*pi)
+          -r/3)
+  
+  ph2 <- (b2/40)
+  pt2 <- pt1 - s0
+  
+  
+  
+  T = (ph1-ph2-s0)/(pt1*(1-pt1)/50+pt2*(1-pt2)/40)^(1/2)
+  
+  
+  count = count + 1
+    
+  if(T < 0.05){
+    rejected = rejected +1
+  }
+
+  
+}
+print(paste0("Fraction of rejections: ", rejected/count))
+
+
+#Pearson-Clopper Confidence Interval
+n = count
+k = n - rejected
+
+f1 = 2*(n - k + 1)
+f2 = 2*k
+
+Fb <- function(f1, f2){
+  qf(.975, f1, f2)
+}
+Fa <- function(f1, f2){
+  qf(.025, f1, f2)
+}
+
+pu=k/(k + (n - k + 1)*Fb(f1, f2))
+po=(k + 1)/(k + 1 + (n - k)*Fa(f1 - 2, f2 - 2))
+print(paste0("[", round(pu, 5), ", ", round(po, 5), "]"))
+
+nominal = 0.05
+if(nominal >= pu & nominal <= po){
+  print("0.05 is contained in the confidence intreval")
+} else{
+  print("0.05 is NOT contained in the confidence intreval")
+}
+
+```
+
+```{r}
+#The same procedure for Alternative Hypothesis s0 = 0.05
+
+count = 0 #count is the number of real-value (non-NaN) samples
+rejected = 0 #rejected is the number of rejected samples
+
+while(count <100000){
+  b1 = rbinom(1, 50, 0.7)
+  b2 = rbinom(1, 40, 0.6)
+  
+  s0 = 0.05
+  r <- -(b1+b2+50*(1+s0)+40*(1+s0))/(50+40)
+  z <- (b2+b1*(1+2*s0)+s0*(50+40*(1+s0)))/(50+40)
+  t <- (-b1*s0*(1+s0))/(50+40)
+  
+  ph1 <- (b1/50)
+  
+  c <- -(2*r^3/27-r*z/3+t)/(2*((r^2-3*z)^(1/2)/3)^3)
+  #This line skips iterations with NaN values for arccos(). The loop stops only when 100000 real-value samples are received.
+  if(c > 1 | c < -1){
+    next
+  }
+  
+  pt1 <- (2*(r^2-3*z)^(1/2)/3*
+            cos(1/3*acos(-(2*r^3/27-r*z/3+t)/(2*((r^2-3*z)^(1/2)/3)^3))+4/3*pi)
+          -r/3)
+  
+  ph2 <- (b2/40)
+  pt2 <- pt1 - s0
+  
+  T = (ph1-ph2-s0)/(pt1*(1-pt1)/50+pt2*(1-pt2)/40)^(1/2)
+  
+  count = count + 1
+    
+  if(T < 0.05){
+    rejected = rejected +1
+  }
+  
+}
+
+print(paste0("Fraction of rejections: ", rejected/count))
+
+
+#Pearson-Clopper Confidence Interval
+n = count
+k = n - rejected
+
+f1 = 2*(n - k + 1)
+f2 = 2*k
+
+Fb <- function(f1, f2){
+  qf(.975, f1, f2)
+}
+Fa <- function(f1, f2){
+  qf(.025, f1, f2)
+}
+Fc <- function(f1, f2){
+  qf(.95, f1, f2)
+}
+
+pu = k/(k + (n - k + 1)*Fb(f1, f2))
+po = (k + 1)/(k + 1 + (n - k)*Fa(f1 - 2, f2 - 2))
+
+if(k==0){
+  po = Fc(2, 2*n)/(n + Fc(2, 2*n))
+} else if(k==n){
+  po = Fc(2, 2*n)/(n + Fc(2, 2*n))
+  pu = 1 - po
+}
+
+print(paste0("[", round(pu, 5), ", ", round(po, 5), "]"))
+
+nominal = 0.05
+if(nominal >= pu & nominal <= po){
+  print("0.05 is contained in the confidence intreval")
+} else{
+  print("0.05 is NOT contained in the confidence intreval")
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

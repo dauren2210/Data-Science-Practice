@@ -1,0 +1,73 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Aufgabe 1.
+
+
+```{r}
+attach(twins,warn.conflicts=FALSE)
+twins
+plot(twins[, 1],twins[, 2],
+xlab="Foster",ylab="Biological")
+pearson <- cor(twins[, 1],twins[, 2])
+round(pearson, 2)
+spearman <- cor(rank(twins[, 1]),rank(twins[, 2]))
+round(spearman, 2)
+```
+
+Aufgabe 2
+
+```{r}
+attach(fat,warn.conflicts=FALSE)
+fat
+plot(fat[, 2],fat[, 8],
+xlab="body.fat",ylab="BMI")
+pearson <- cor(fat[, 2],fat[, 8])
+round(pearson, 2)
+spearman <- cor(rank(fat[, 2]),rank(fat[, 8]))
+round(spearman, 2)
+```
+
+Aufgabe 3. 
+
+```{r}
+attach(survey,warn.conflicts=FALSE)
+survey
+library(lattice)
+xyplot(Wr.Hnd ~ NW.Hnd | Sex, data=survey, pch=20 , cex=3 , col=rgb(0.2,0.4,0.8,0.5))
+bwplot(~Smoke | Sex, data=survey, pch=20 , cex=3 , col=rgb(0.2,0.4,0.8,0.5))
+```
+
+Aufgabe 4.
+
+```{r}
+attach(InsectSprays,warn.conflicts=FALSE)
+InsectSprays
+daten = subset(InsectSprays,spray %in% c("C", "D", "E"))
+daten
+```
+
+
+Aufgabe 5.
+
+```{r}
+attach(babyboom,warn.conflicts=FALSE)
+babyboom
+hist(babyboom$wt)
+hist(diff(babyboom$running.time))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

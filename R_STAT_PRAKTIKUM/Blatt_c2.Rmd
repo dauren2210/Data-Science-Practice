@@ -1,0 +1,100 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Aufgabe 1.
+
+Die Verteilung fuer p=0.2 sieht viel normaler aus als fuer p=0.02. 
+
+```{r}
+f = function(p){
+  m=200
+  n=100
+  res=rbinom(m, n, p)
+  hist(res, prob=TRUE, main="n=5")
+  curve(dnorm(x, n*p, sqrt(n*p*(1-p))), add=TRUE, lwd=3)
+}
+f(0.02)
+f(0.2)
+```
+
+
+
+Aufgabe 2.
+
+Fuer kleinere Werte von z.B. n=3 hat die Strichprobenverteilung erkennbar schwere Verteilungstails. Die liene auf der Grafik ist nicht linear fuer kleinere Were von n. 
+
+```{r}
+f = function(n){
+  n = 3
+  m = 200
+  res = c()
+  for (i in 1:m) {
+    x = rnorm(n)
+    res[i] = (mean(x) - 0)/(sd(x)/sqrt(n))
+  }
+  qqnorm(res)
+}
+
+f(3)
+f(10)
+f(25)
+f(50)
+f(100)
+
+```
+
+
+Aufgabe 3.
+
+Die meisten Stichproben sind normalverteilt, aber genug viele Stichproben stehen weit von der Linie.
+
+```{r}
+f = function(n){
+  m = 1000
+  res = c()
+  for (i in 1:m) {
+    x = rnorm(n)
+    res[i] = (mean(x) - 0)/(sd(x)/sqrt(n))
+  }
+  qqplot(res, rt(m, df = n - 1))
+}
+f(3)
+f(10)
+f(25)
+f(50)
+f(100)
+```
+
+
+Aufgabe 4.
+
+
+
+```{r}
+f = function(n){
+  res = c()
+  for (i in 1:500) res[i] = sum(rnorm(n)^2)
+  qqnorm(res)
+}
+f(4)
+f(10)
+f(25)
+f(50)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

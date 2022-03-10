@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+Aufgabe 1.
+
+Die Variable y2000 ist nicht normalverteilt, da QQ-Plot der Daten liegen nicht in einer Gerade ganz deutlich. Die Variable y1970 kann als normalverteilt angenommen werden, da die Daten zu einer Gerade im QQ-Plot führen, aber im Histogram kann man gleiches Verhalten der Daten beobachten. Es ist nicht empfehlenswert diese Variablen zusammen mit t.test() zu testen, weil die nicht ähnliches Verhalten der Daten haben.
+
+```{r}
+attach(homedata,warn.conflicts=FALSE)
+homedata
+hist(y1970)
+hist(y2000)
+qqnorm(y1970,col="blue",cex=1.5,cex.axis=1.5,cex.lab=1.5,xlab="Quantile von N(0,1)", ylab="Daten")
+qqnorm(y2000,col="blue",cex=1.5,cex.axis=1.5,cex.lab=1.5,xlab="Quantile von N(0,1)", ylab="Daten")
+t.test(y1970, conf.level=0.9)
+t.test(y2000, conf.level=0.9)
+```
+
+
+Aufgabe 2. 
+
+Der Datensatz enthält mehrere Daten mit 99 Jahre alten Eltern, was wenig wahrscheinlich in Realität ist. Deshalb wir sollen annehmen, das diese Daten als unbekannt behandelt werden sollten. 
+
+```{r}
+attach(babies,warn.conflicts=FALSE)
+babies
+qqnorm(age)
+qqnorm(dage)
+
+with(babies, t.test(dage-age, conf.level=0.95))
+with(babies, t.test(dage[dage<99]-age[age<99], conf.level=0.95))
+
+```
+
+
+Aufgabe 3.
+
+Ja, das Konfidenzintervall [0.018, 0.118] enthält den Wert p=1/10
+```{r}
+n <- 100
+x <- 5
+prop.test(x, n, conf.level=0.95)
+```
+
+

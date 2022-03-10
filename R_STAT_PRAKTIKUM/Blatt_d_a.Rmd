@@ -1,0 +1,85 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Dauren Tursynbek 108019256321
+Uebungsblatt d. Teil a
+
+
+Aufgabe 1.
+
+```{r}
+attach(Cars93)
+Cars93
+aov(MPG.highway ~ DriveTrain)
+
+detach(Cars93)
+```
+
+
+Aufgabe 2.
+
+```{r}
+attach(PlantGrowth)
+
+kruskal.test(weight ~ group)
+
+```
+```{r}
+aov(weight ~ group)
+
+detach(PlantGrowth)
+```
+
+
+
+Aufgabe 3.
+Das Korrelationskoeffizient ist fast gleich 1. Das heisst, dass es ein sehr starker Zusammenhang zwischen diesen Variablen gibt. Also, ein lineares Modell waere fuer die Daten sinvoll. Linear Regression Modell schaetzt die Daten sehr praezis. Die Verteilung zwischen residuals(res) und Days sieht wie ein Parabola aus. 
+```{r}
+attach(wtloss)
+
+plot(Days, Weight)
+
+cor(Days, Weight, method="pearson")
+
+res <- lm(Weight ~ Days)
+abline(res)
+
+plot(Days, residuals(res))
+
+detach(wtloss)
+```
+
+
+
+Aufgabe 4.
+Die Variable limit hat auf den test eine Enfluss hat: das Koeffizient von limit ist viel groesser als das Koeffizient von year. Das heisst, dass limit zur Abnahme der Anzahl der Zufallen fuehrt. 
+```{r}
+attach(Traffic)
+Traffic
+lm(Traffic$y ~ Traffic$year)
+lm(Traffic$y ~ Traffic$year + Traffic$limit)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

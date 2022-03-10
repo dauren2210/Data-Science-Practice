@@ -1,0 +1,310 @@
+---
+title: "Aufgabe s1 für Statistik-Praktikum"
+output: html_notebook
+---
+
+Dauren Tursynbek
+\n
+
+108019256321
+\n
+
+
+Aufgabe s1.
+
+Für dieses Data Frame würde ich Barplot verwenden, weil im Unterschied zu Piechart, Barplot zeigt sowie den nominalen Wert als auch den Prozentanteil aller kategorischen Variablen. Nominale Werte sind wichtig in diesem Data Frame, weil es um Steueraufkommen und allgemeines Einkommen geht.
+
+\n
+
+Wenn man jedes Income-Bracket einzeln behandelt, dann bekommt man den Trend, dass der Prozentanteil des Steueraufkommens sich in jedem Income-Bracket zwischen 1974 and 1978 verringert. Aber im Allgemeinen, wenn man alle Income-Brackets zusammen behandelt, dann bekommt man der Trend, dass der Prozentanteil des Steueraufkommens sich zwischen 1974 und 1978 steigert. Das passiert wegen des Unterschieds in der Wertgröße und wegen des Unteschieds im Gewicht der Income-Brackets. Zum Beispiel, ein Income-Bracket in 1974 mit wenigem Prozentanteil für Steueraufkommen, aber mit relativ großem Nominalwert, könnte in 1978 seinen Nominalwert extrem verlieren. Damit hat das Income-Bracket wenig Bedeutung in 1978. 
+
+
+```{r}
+data = read.csv("C:\\Users\\Asus\\Desktop\\tax_data.csv", sep=";")
+colnames(data)[5] = "Tax_Yield_1978"
+
+
+data1_1974 = c(data$Income_1974[1], data$Tax_Yield_1974[1])
+
+per1_1974<- round(100*data1_1974/sum(data1_1974), 1)
+pie(data1_1974, labels = paste0(per1_1974, "%"), main = "Income 1974 (<5.000$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1974", "Tax Yield 1974"), cex=1, fill=topo.colors(2))
+
+data1_1978 = c(data$Income_1978[1], data$Tax_Yield_1978[1])
+
+per1_1978<- round(100*data1_1978/sum(data1_1978), 1)
+pie(data1_1974, labels = paste0(per1_1978, "%"), main = "Income 1978 (<5.000$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1978", "Tax Yield 1978"), cex=1, fill=topo.colors(2))
+
+
+
+```
+
+```{r}
+data2_1974 = c(data$Income_1974[2], data$Tax_Yield_1974[2])
+
+per2_1974<- round(100*data2_1974/sum(data2_1974), 1)
+pie(data2_1974, labels = paste0(per2_1974, "%"), main = "Income 1974 (5.000-9.999$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1974", "Tax Yield 1974"), cex=1, fill=topo.colors(2))
+
+data2_1978 = c(data$Income_1978[2], data$Tax_Yield_1978[2])
+
+per2_1978<- round(100*data2_1978/sum(data2_1978), 1)
+pie(data2_1978, labels = paste0(per2_1978, "%"), main = "Income 1978 (5.000-9.999$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1978", "Tax Yield 1978"), cex=1, fill=topo.colors(2))
+```
+
+```{r}
+data3_1974 = c(data$Income_1974[3], data$Tax_Yield_1974[3])
+
+per3_1974<- round(100*data3_1974/sum(data3_1974), 1)
+pie(data3_1974, labels = paste0(per3_1974, "%"), main = "Income 1974 (10.000-14.999$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1974", "Tax Yield 1974"), cex=1, fill=topo.colors(2))
+
+data3_1978 = c(data$Income_1978[3], data$Tax_Yield_1978[3])
+
+per3_1978<- round(100*data3_1978/sum(data3_1978), 1)
+pie(data3_1978, labels = paste0(per3_1978, "%"), main = "Income 1978 (10.000-14.999$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1978", "Tax Yield 1978"), cex=1, fill=topo.colors(2))
+```
+
+```{r}
+data4_1974 = c(data$Income_1974[4], data$Tax_Yield_1974[4])
+
+per4_1974<- round(100*data4_1974/sum(data4_1974), 1)
+pie(data4_1974, labels = paste0(per4_1974, "%"), main = "Income 1974 (15.000-99.999$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1974", "Tax Yield 1974"), cex=1, fill=topo.colors(2))
+
+data4_1978 = c(data$Income_1978[4], data$Tax_Yield_1978[4])
+
+per4_1978<- round(100*data4_1978/sum(data4_1978), 1)
+pie(data4_1978, labels = paste0(per4_1978, "%"), main = "Income 1978 (15.000-99.999$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1978", "Tax Yield 1978"), cex=1, fill=topo.colors(2))
+```
+
+```{r}
+data5_1974 = c(data$Income_1974[5], data$Tax_Yield_1974[5])
+
+per5_1974<- round(100*data5_1974/sum(data5_1974), 1)
+pie(data5_1974, labels = paste0(per5_1974, "%"), main = "Income 1974 (>100.000$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1974", "Tax Yield 1974"), cex=1, fill=topo.colors(2))
+
+data5_1978 = c(data$Income_1978[5], data$Tax_Yield_1978[5])
+
+per5_1978<- round(100*data5_1978/sum(data5_1978), 1)
+pie(data5_1978, labels = paste0(per5_1978, "%"), main = "Income 1978 (>100.000$)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1978", "Tax Yield 1978"), cex=1, fill=topo.colors(2))
+```
+
+```{r}
+total <- c("Total", sum(data$Income_1974), sum(data$Tax_Yield_1974), sum(data$Income_1978), sum(data$Tax_Yield_1978))
+data[nrow(data) + 1,] = total
+data[, c(2, 3, 4, 5)] <- sapply(data[, c(2, 3, 4, 5)], as.numeric)
+
+```
+
+```{r}
+data_total_1974 = c(data$Income_1974[6], data$Tax_Yield_1974[6])
+
+per_total_1974<- round(100*data_total_1974/sum(data_total_1974), 1)
+pie(data_total_1974, labels = paste0(per_total_1974, "%"), main = "Income 1974 (Overall)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1974", "Tax Yield 1974"), cex=1, fill=topo.colors(2))
+
+data_total_1978 = c(data$Income_1978[6], data$Tax_Yield_1978[6])
+
+per_total_1978<- round(100*data_total_1978/sum(data_total_1978), 1)
+pie(data_total_1978, labels = paste0(per_total_1978, "%"), main = "Income 1978 (Overall)", col=topo.colors(2), cex=1.2)
+legend("topright", c("Income 1978", "Tax Yield 1978"), cex=1, fill=topo.colors(2))
+```
+
+```{r}
+#Proper data transformation for Barplots
+data2 <- t(data)
+data2 <- data.frame(data2, row.names = NULL)
+colnames(data2) <- data2[1, 1:6]
+data2$Income_Bracket <- (colnames(data))
+data2 <- data2[2:5, ]
+data2[,1:6] <- as.numeric(unlist(data2[,1:6]))
+data2
+
+data_1974 <- data2[1:2,]
+data_1974
+
+data_1978 <- data2[3:4,]
+data_1978
+
+```
+
+
+```{r}
+#1974
+per_1_1974<- paste0(round(100*data_1974[,1]/sum(data_1974[,1]), 1), "%")
+ggplot(data_1974, aes(x = Income_Bracket, y = data_1974[,1])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1974 (<5.000$)") +
+        scale_x_discrete(labels=c("Income_1974" = "Income 1974", "Tax_Yield_1974" = "Tax Yield 1974")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_1_1974), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+
+#1978
+per_1_1978<- paste0(round(100*data_1978[,1]/sum(data_1978[,1]), 1), "%")
+ggplot(data_1978, aes(x = Income_Bracket, y = data_1978[,1])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1978 (<5.000$)") +
+        scale_x_discrete(labels=c("Income_1978" = "Income 1978", "Tax_Yield_1978" = "Tax Yield 1978")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_1_1978), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+```
+
+
+```{r}
+#1974
+per_2_1974<- paste0(round(100*data_1974[,2]/sum(data_1974[,2]), 1), "%")
+ggplot(data_1974, aes(x = Income_Bracket, y = data_1974[,2])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1974 (5.000-9.999$)") +
+        scale_x_discrete(labels=c("Income_1974" = "Income 1974", "Tax_Yield_1974" = "Tax Yield 1974")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_2_1974), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+
+#1978
+per_2_1978<- paste0(round(100*data_1978[,2]/sum(data_1978[,2]), 1), "%")
+ggplot(data_1978, aes(x = Income_Bracket, y = data_1978[,2])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1978 (5.000-9.999$)") +
+        scale_x_discrete(labels=c("Income_1978" = "Income 1978", "Tax_Yield_1978" = "Tax Yield 1978")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_2_1978), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+```
+
+
+```{r}
+#1974
+per_3_1974<- paste0(round(100*data_1974[,3]/sum(data_1974[,3]), 1), "%")
+ggplot(data_1974, aes(x = Income_Bracket, y = data_1974[,3])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1974 (10.000-14.999$)") +
+        scale_x_discrete(labels=c("Income_1974" = "Income 1974", "Tax_Yield_1974" = "Tax Yield 1974")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_3_1974), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+
+#1978
+per_3_1978<- paste0(round(100*data_1978[,3]/sum(data_1978[,3]), 1), "%")
+ggplot(data_1978, aes(x = Income_Bracket, y = data_1978[,3])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1978 (10.000-14.999$)") +
+        scale_x_discrete(labels=c("Income_1978" = "Income 1978", "Tax_Yield_1978" = "Tax Yield 1978")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_3_1978), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+```
+
+
+```{r}
+#1974
+per_4_1974<- paste0(round(100*data_1974[,4]/sum(data_1974[,4]), 1), "%")
+ggplot(data_1974, aes(x = Income_Bracket, y = data_1974[,4])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1974 (15.000-99.999$)") +
+        scale_x_discrete(labels=c("Income_1974" = "Income 1974", "Tax_Yield_1974" = "Tax Yield 1974")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_4_1974), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+
+#1978
+per_4_1978<- paste0(round(100*data_1978[,4]/sum(data_1978[,4]), 1), "%")
+ggplot(data_1978, aes(x = Income_Bracket, y = data_1978[,4])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1978 (15.000-99.999$)") +
+        scale_x_discrete(labels=c("Income_1978" = "Income 1978", "Tax_Yield_1978" = "Tax Yield 1978")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_4_1978), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+```
+
+
+```{r}
+#1974
+per_5_1974<- paste0(round(100*data_1974[,5]/sum(data_1974[,5]), 1), "%")
+ggplot(data_1974, aes(x = Income_Bracket, y = data_1974[,5])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1974 (>100.000$)") +
+        scale_x_discrete(labels=c("Income_1974" = "Income 1974", "Tax_Yield_1974" = "Tax Yield 1974")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_5_1974), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+
+#1978
+per_5_1978<- paste0(round(100*data_1978[,5]/sum(data_1978[,5]), 1), "%")
+ggplot(data_1978, aes(x = Income_Bracket, y = data_1978[,5])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1978 (>100.000$)") +
+        scale_x_discrete(labels=c("Income_1978" = "Income 1978", "Tax_Yield_1978" = "Tax Yield 1978")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_5_1978), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+```
+
+
+```{r}
+#1974
+per_6_1974<- paste0(round(100*data_1974[,6]/sum(data_1974[,6]), 1), "%")
+ggplot(data_1974, aes(x = Income_Bracket, y = data_1974[,6])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1974 (Overall)") +
+        scale_x_discrete(labels=c("Income_1974" = "Income 1974", "Tax_Yield_1974" = "Tax Yield 1974")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_6_1974), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+
+#1978
+per_6_1978<- paste0(round(100*data_1978[,6]/sum(data_1978[,6]), 1), "%")
+ggplot(data_1978, aes(x = Income_Bracket, y = data_1978[,6])) +
+       geom_bar(stat = "identity") +
+       geom_col() +
+        labs(title="Income 1978 (Overall)") +
+        scale_x_discrete(labels=c("Income_1978" = "Income 1978", "Tax_Yield_1978" = "Tax Yield 1978")) +
+        scale_y_continuous(labels= label_number(suffix = " M", scale = 1e-6)) +
+        xlab("Type") + ylab("Value") +
+        geom_text(aes(label = per_6_1978), nudge_y = 4) + 
+        coord_flip() # Horizontal bar plot
+```
+
+
+
+
+
+
+
+
+
+
+
+

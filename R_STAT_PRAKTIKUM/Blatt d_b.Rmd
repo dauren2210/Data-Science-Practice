@@ -1,0 +1,79 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Dauren Tursynbek 108019256321
+Uebungsblatt d. Teil b 
+
+Aufgabe 6.
+
+```{r}
+n=200
+x=71
+p=0.25
+binom.test(x,n,p,alternative='less')
+```
+
+Aufgabe 7.
+```{r}
+x=c(71, 85)
+n=c(200, 205)
+prop.test(x, n, alt="less")
+```
+
+Aufgabe 8.
+```{r}
+attach(babies,warn.conflicts=FALSE)
+smokers = wt[smoke == 1 & wt != 999]
+nonsmokers = wt[smoke == 0 & wt != 999]
+t.test(smokers, nonsmokers)
+detach(babies)
+```
+
+Aufgabe 9.
+Varianzen sind 95% gleich wie var.test() zeigt. 
+```{r}
+attach(shoes)
+a = dnorm(A, mean(A), 1)
+plot(A, a)
+
+b = dnorm(B, mean(B), 1)
+plot(B, b)
+```
+
+
+```{r}
+
+plot(A, B)
+var.test(A, B)
+
+```
+
+Aufgabe 10.
+
+```{r}
+T <- (422-500) * sqrt(20)/51
+round(T, 1)
+-qt(0.95, 20-1)
+T <- -qt(0.95, 20-1)
+```
+
+Aufgabe 12.
+Die Daten scheinen aus einer Normalverteilung zu kommen, weil das QQ-Plot linear ist.
+
+```{r}
+attach(normtemp,warn.conflicts=FALSE)
+normtemp
+hist(temperature)
+qqnorm(temperature,col="blue",cex=1.5,cex.axis=1.5,cex.lab=1.5,xlab="Quantile von N(0,1)", ylab="Daten")
+
+t.test(temperature)
+
+```
+```{r}
+tmen = temperature[gender==1]
+twomen = temperature[gender==2]
+t.test(tmen, twomen, paired=TRUE, alt="two.sided")
+```
+

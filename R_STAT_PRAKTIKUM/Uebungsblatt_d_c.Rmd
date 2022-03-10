@@ -1,0 +1,118 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Dauren Tursynbek 108019256321
+Übungsblatt d. Teil c
+
+Aufgabe 13.
+
+```{r}
+m = 250
+n = 10
+res = c()
+for (i in 1:m) {
+  res[i] = t.test(rnorm(n), mu = 0, df = n-1)$p.value
+}
+sum(res < 0.05)/length(res)
+```
+```{r}
+m = 250
+n = 10
+res = c()
+for (i in 1:m) {
+  res[i] = t.test(rexp(n), mu = 1, df = n-1)$p.value
+}
+sum(res < 0.05)/length(res)
+```
+
+```{r}
+m = 250
+n = 10
+res = c()
+for (i in 1:m) {
+  res[i] = t.test(runif(n), mu = 1/2, df = n-1)$p.value
+}
+sum(res < 0.05)/length(res)
+```
+
+```{r}
+m = 250
+n = 10
+res = c()
+for (i in 1:m) {
+  res[i] = t.test(rt(n, df=4), mu = 0)$p.value
+}
+sum(res < 0.05)/length(res)
+
+```
+
+
+
+Aufgabe 14.
+
+Alle drei Teststatistiken sehen fast gleich aus. In vielen Fällen sehen Tails in runif(n, -1, 1) besser als in rnorm(x) und rt(n, df=2), weil Verteilungsgraph fällt wicher in den beiden Seiten.
+Wenn wir rexp(n)-1 benutzen, dann sind die Tails so gut wie bei rs(n, df=2), aber die sign-rank Verteilung schätzt nicht gut die Exponentialverteilung (verschoben um 1). 
+
+```{r}
+n = 20
+m = 250
+res = c()
+for (i in 1:m) {
+  x = rnorm(n)
+  res[i] = sum(rank(abs(x))[x>0])
+}
+
+hist(res, prob = TRUE)
+x = 40:140
+lines(x, dsignrank(x, n))
+```
+
+```{r}
+n = 20
+m = 250
+res = c()
+for (i in 1:m) {
+  x = rt(n, df=2)
+  res[i] = sum(rank(abs(x))[x>0])
+}
+
+hist(res, prob = TRUE)
+x = 40:140
+lines(x, dsignrank(x, n))
+```
+
+```{r}
+n = 20
+m = 250
+res = c()
+for (i in 1:m) {
+  x = runif(n, -1, 1)
+  res[i] = sum(rank(abs(x))[x>0])
+}
+
+hist(res, prob = TRUE)
+x = 40:140
+lines(x, dsignrank(x, n))
+```
+
+```{r}
+n = 20
+m = 250
+res = c()
+for (i in 1:m) {
+  x = rexp(n)-1
+  res[i] = sum(rank(abs(x))[x>0])
+}
+
+hist(res, prob = TRUE)
+x = 40:140
+lines(x, dsignrank(x, n))
+```
+
+
+
+
+
+
